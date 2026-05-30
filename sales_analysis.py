@@ -1,0 +1,37 @@
+import pandas as pd
+
+df = pd.read_csv("superstore.CSV.csv", encoding="latin1")
+
+print("Total Sales:")
+print(df["Sales"].sum())
+
+print("\nTotal Profit:")
+print(df["Profit"].sum())
+
+print("\nTotal Orders:")
+print(df["Order ID"].nunique())
+print("\nTop 10 Products:")
+top_products = df.groupby("Product Name")["Sales"].sum().sort_values(ascending=False).head(10)
+print(top_products)
+print("\nSales by region:")
+sales_by_region = df.groupby("Region")["Sales"].sum()
+print(sales_by_region)
+print("\nProfit by region:")
+profit_by_region = df.groupby("Region")["Profit"].sum()
+print(profit_by_region)
+import matplotlib.pyplot as plt
+profit_by_region.plot(kind="bar", color="skyblue")
+plt.title("Profit by Region")   
+plt.xlabel("Region")
+plt.ylabel("Profit")
+plt.savefig("profit_by_region.png")
+plt.show()
+top_products = df.groupby("Product Name")["Sales"].sum().sort_values(ascending=False).head(10)
+top_products.plot(kind="bar", color="salmon")
+plt.title("Top 10 Products by Sales")
+plt.xlabel("Product Name")
+plt.ylabel("Sales")
+plt.xticks(rotation=45, ha="right")
+plt.tight_layout()
+plt.savefig("top_products.png")
+plt.show()
